@@ -1,0 +1,7 @@
+# PostgreSQL
+# ------------------------------------------------------------------------------
+POSTGRES_HOST=postgres
+POSTGRES_PORT=5432
+POSTGRES_DB=template_for_analyze
+POSTGRES_USER=wXsdCRJIvInYdoSqXMLtuOcnTEMxGQqn
+POSTGRES_PASSWORD=bGItIPZfYGAIeLH8eOt3fdhAx1fbRL1AQg8frCYeAcfv0yvpJzYGhAAoY9Xsfcih
