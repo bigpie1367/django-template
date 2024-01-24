@@ -21,7 +21,7 @@ RUN    bash -l -c "nvm install 14.15.0"
 
 # copy application code to WORKDIR
 COPY ./../ /app/
-WORKDIR /app/{{ your_project_name }}
+WORKDIR /app/
 
 COPY ./compose/production/django/entrypoint /entrypoint
 RUN sed -i 's/\r$//g' /entrypoint

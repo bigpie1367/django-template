@@ -24,7 +24,7 @@ USE_TZ = True
 DATABASES = {
     "default": env.db(
         "DATABASE_URL",
-        default="postgres:///{{ your_project_name }}",
+        default="postgres:///",
     ),
 }
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
@@ -53,18 +53,18 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
-    "template_app"
+    "{{ your_app_name }}"
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 # MIGRATIONS
 # ------------------------------------------------------------------------------
-# MIGRATION_MODULES = {"sites": "{{ your_project_name }}.contrib.sites.migrations"}
+# MIGRATION_MODULES = {"sites": ".contrib.sites.migrations"}
 
 # AUTHENTICATION
 # ------------------------------------------------------------------------------
-AUTH_USER_MODEL = "template_app.User"
+AUTH_USER_MODEL = "{{ your_app_name }}.User"
 
 LOGIN_REDIRECT_URL = "users:redirect"
 
@@ -197,13 +197,13 @@ ADMIN_URL = "admin/"
 # # https://docs.allauth.org/en/latest/account/configuration.html
 # ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 # # https://docs.allauth.org/en/latest/account/configuration.html
-# ACCOUNT_ADAPTER = "{{ your_project_name }}.users.adapters.AccountAdapter"
+# ACCOUNT_ADAPTER = ".users.adapters.AccountAdapter"
 # # https://docs.allauth.org/en/latest/account/forms.html
 # ACCOUNT_FORMS = {"signup": "{{ emp_project_name }}.users.forms.UserSignupForm"}
 # # https://docs.allauth.org/en/latest/socialaccount/configuration.html
-# SOCIALACCOUNT_ADAPTER = "{{ your_project_name }}.users.adapters.SocialAccountAdapter"
+# SOCIALACCOUNT_ADAPTER = ".users.adapters.SocialAccountAdapter"
 # # https://docs.allauth.org/en/latest/socialaccount/configuration.html
-# SOCIALACCOUNT_FORMS = {"signup": "{{ your_project_name }}.users.forms.UserSocialSignupForm"}
+# SOCIALACCOUNT_FORMS = {"signup": ".users.forms.UserSocialSignupForm"}
 
 # # django-rest-framework
 # # -------------------------------------------------------------------------------
@@ -222,8 +222,8 @@ ADMIN_URL = "admin/"
 # # By Default swagger ui is available only to admin user(s). You can change permission classes to change that
 # # See more configuration options at https://drf-spectacular.readthedocs.io/en/latest/settings.html#settings
 # SPECTACULAR_SETTINGS = {
-#     "TITLE": "{{ your_project_name }} API",
-#     "DESCRIPTION": "Documentation of API endpoints of {{ your_project_name }}",
+#     "TITLE": " API",
+#     "DESCRIPTION": "Documentation of API endpoints of ",
 #     "VERSION": "1.0.0",
 #     "SERVE_PERMISSIONS": ["rest_framework.permissions.IsAdminUser"],
 # }
