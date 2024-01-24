@@ -48,6 +48,6 @@ media/
 
 .pytest_cache/
 .ipython/
-template_project/.env
-template_project/.envs/*
-!template_project/.envs/.local/
+bin/.env
+bin/.envs/*
+!bin/.envs/.local/
