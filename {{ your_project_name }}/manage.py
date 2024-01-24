@@ -26,6 +26,6 @@ if __name__ == "__main__":
     # This allows easy placement of apps within the interior
     # temp_project_name }} directory.
     current_path = Path(__file__).parent.resolve()
-    sys.path.append(str(current_path / ""))
+    sys.path.append(str(current_path / "{{ your_project_name }}"))
 
     execute_from_command_line(sys.argv)

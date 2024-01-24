@@ -11,7 +11,7 @@ ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["example.com"])
 DATABASES = {
     "default": env.db(
         "DATABASE_URL",
-        default="postgres:///",
+        default="postgres:///{{ your_project_name }}",
     ),
 }
 DATABASES["default"]["CONN_MAX_AGE"] = env.int("CONN_MAX_AGE", default=60)  # noqa: F405

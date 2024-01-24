@@ -24,7 +24,7 @@ USE_TZ = True
 DATABASES = {
     "default": env.db(
         "DATABASE_URL",
-        default="postgres:///",
+        default="postgres:///{{ your_project_name }}",
     ),
 }
 DATABASES["default"]["ATOMIC_REQUESTS"] = True

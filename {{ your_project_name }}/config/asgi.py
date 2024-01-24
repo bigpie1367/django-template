@@ -16,7 +16,7 @@ from django.core.asgi import get_asgi_application
 # This allows easy placement of apps within the interior
 #  directory.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
-sys.path.append(str(BASE_DIR / ""))
+sys.path.append(str(BASE_DIR / "{{ your_project_name }}"))
 
 # DJANGO_SETTINGS_MODULE 환경변수가 주입될 경우 해당 환경변수에 설정된 세팅 파일 활용
 # 환경변수가 주입되지 않을 경우 기본적으로 config.settings.local 세팅 활용
