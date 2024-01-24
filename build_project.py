@@ -4,7 +4,7 @@ import re
 
 def replace_word_in_file(file_path, old_project_name, new_project_name, script_path):
     if file_path == script_path:
-        print(f"Skipping the script file itself: {file_path}")
+        # print(f"Skipping the script file itself: {file_path}")
         return
 
     try:
@@ -19,7 +19,8 @@ def replace_word_in_file(file_path, old_project_name, new_project_name, script_p
             file.write(file_contents)
 
     except UnicodeDecodeError:
-        print(f"Skipping file due to decoding error: {file_path}")
+        # print(f"Skipping file due to decoding error: {file_path}")
+        return
 
 
 def replace_word_in_dirname(dir_path, old_project_name, new_project_name):
@@ -30,7 +31,7 @@ def replace_word_in_dirname(dir_path, old_project_name, new_project_name):
     if new_dir_name != dir_name:
         new_dir_path = os.path.join(parent_dir, new_dir_name)
         os.rename(dir_path, new_dir_path)
-        print(f"Renamed directory from {dir_path} to {new_dir_path}")
+        # print(f"Renamed directory from {dir_path} to {new_dir_path}")
         return new_dir_path
     return dir_path
 
@@ -52,12 +53,12 @@ def main(root_dir, old_project_name, new_project_name):
 
 if __name__ == "__main__":
     root_dir = os.path.dirname(os.path.realpath(__file__))  # Root directory is script's location
-    old_project_name = 'change_test'  # Word to be replaced
+    old_project_name = '{{ your_project_name }}'  # Word to be replaced
     new_project_name = input("Enter the new project name: ")
 
     main(root_dir, old_project_name, new_project_name)
 
-    old_app_name = 'test_app_name'
+    old_app_name = '{{ your_app_name }}'
     new_app_name = input("Enter the new app name: ")
 
     main(root_dir, old_app_name, new_app_name)
