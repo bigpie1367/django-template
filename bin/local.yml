@@ -1,35 +1,51 @@
 version: "3"
 
 volumes:
-  _local_postgres_data: {}
-  _local_postgres_data_backups: {}
+  {{ your_project_name }}_local_postgres_data: {}
+  {{ your_project_name }}_local_postgres_data_backups: {}
 
 services:
   django: &django
     build:
       context: .
       dockerfile: ./compose/local/django/Dockerfile
-    image: _local_django
-    container_name: _local_django
+    image: {{ your_project_name }}_local_django
+    container_name: {{ your_project_name }}_local_django
     depends_on:
       - postgres
+      - redis
     volumes:
-      - ./..:/app:z
+      - ./../{{ your_project_name }}:/app:z
+      - .:/app:z
     env_file:
       - ./.envs/.local/.django
       - ./.envs/.local/.postgres
     ports:
       - "8000:8000"
-    command: /start
+    command: sh -c "gunicorn config.wsgi:application"
 
   postgres:
     build:
       context: .
       dockerfile: ./compose/production/postgres/Dockerfile
-    image: _production_postgres
-    container_name: _local_postgres
+    image: {{ your_project_name }}_production_postgres
+    container_name: {{ your_project_name }}_local_postgres
     volumes:
-      - _local_postgres_data:/var/lib/postgresql/data
-      - _local_postgres_data_backups:/backups
+      - {{ your_project_name }}_local_postgres_data:/var/lib/postgresql/data
+      - {{ your_project_name }}_local_postgres_data_backups:/backups
     env_file:
       - ./.envs/.local/.postgres
+
+  redis:
+    image: redis:6
+    container_name: {{ your_project_name }}_local_redis
+
+  celeryworker:
+    <<: *django
+    image: {{ your_project_name }}_local_celeryworker
+    container_name: {{ your_project_name }}_local_celeryworker
+    depends_on:
+      - redis
+      - postgres
+    ports: []
+    command: /start-celeryworker

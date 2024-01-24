@@ -33,20 +33,6 @@ services:
     env_file:
       - ./.envs/.production/.postgres
 
-  traefik:
-    build:
-      context: .
-      dockerfile: ./compose/production/traefik/Dockerfile
-    image: template_for_analyze_production_traefik
-    depends_on:
-      - django
-    volumes:
-      - production_traefik:/etc/traefik/acme
-    ports:
-      - "0.0.0.0:80:80"
-      - "0.0.0.0:443:443"
-      - "0.0.0.0:5555:5555"
-
   redis:
     image: redis:6
 
@@ -54,16 +40,6 @@ services:
     <<: *django
     image: template_for_analyze_production_celeryworker
     command: /start-celeryworker
-
-  celerybeat:
-    <<: *django
-    image: template_for_analyze_production_celerybeat
-    command: /start-celerybeat
-
-  flower:
-    <<: *django
-    image: template_for_analyze_production_flower
-    command: /start-flower
 
   nginx:
     build:

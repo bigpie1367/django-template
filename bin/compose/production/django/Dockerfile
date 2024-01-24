@@ -1,11 +1,11 @@
-FROM python:3.10.6                                                                                   
+FROM python:3.10.4                                                                                    
 ENV PYTHONUNBUFFERED 1
 
 WORKDIR /app
 ADD    ./requirements .
 RUN    apt-get update -y
 RUN    pip install --upgrade pip
-RUN    pip install -r local.txt
+RUN    pip install -r production.txt
 
 # Install NVM
 RUN    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
@@ -34,15 +34,6 @@ RUN chmod +x /start
 COPY ./compose/local/django/celery/start /start-celeryworker
 RUN sed -i 's/\r$//g' /start-celeryworker
 RUN chmod +x /start-celeryworker
-
-# COPY ./compose/local/django/celery/beat/start /start-celerybeat
-# RUN sed -i 's/\r$//g' /start-celerybeat
-# RUN chmod +x /start-celerybeat
-
-# COPY ./compose/local/django/celery/flower/start /start-flower
-# RUN sed -i 's/\r$//g' /start-flower
-# RUN chmod +x /start-flower
-
 
 
 ENTRYPOINT ["/entrypoint"]

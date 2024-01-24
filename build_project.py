@@ -53,12 +53,12 @@ def main(root_dir, old_project_name, new_project_name):
 
 if __name__ == "__main__":
     root_dir = os.path.dirname(os.path.realpath(__file__))  # Root directory is script's location
-    old_project_name = '{{ your_project_name }}'  # Word to be replaced
+    old_project_name = 'test_project'  # Word to be replaced
     new_project_name = input("Enter the new project name: ")
 
     main(root_dir, old_project_name, new_project_name)
 
-    old_app_name = '{{ your_app_name }}'
+    old_app_name = 'test_app'
     new_app_name = input("Enter the new app name: ")
 
     main(root_dir, old_app_name, new_app_name)
