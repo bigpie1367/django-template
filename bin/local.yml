@@ -10,26 +10,23 @@ services:
       context: .
       dockerfile: ./compose/local/django/Dockerfile
     image: {{ your_project_name }}_local_django
-    container_name: {{ your_project_name }}_local_django
     depends_on:
       - postgres
       - redis
     volumes:
       - ./../{{ your_project_name }}:/app:z
-      - .:/app:z
     env_file:
       - ./.envs/.local/.django
       - ./.envs/.local/.postgres
     ports:
       - "8000:8000"
-    command: sh -c "gunicorn config.wsgi:application"
+    command: /start
 
   postgres:
     build:
       context: .
       dockerfile: ./compose/production/postgres/Dockerfile
     image: {{ your_project_name }}_production_postgres
-    container_name: {{ your_project_name }}_local_postgres
     volumes:
       - {{ your_project_name }}_local_postgres_data:/var/lib/postgresql/data
       - {{ your_project_name }}_local_postgres_data_backups:/backups
@@ -38,12 +35,10 @@ services:
 
   redis:
     image: redis:6
-    container_name: {{ your_project_name }}_local_redis
 
-  celeryworker:
+  ceelry:
     <<: *django
-    image: {{ your_project_name }}_local_celeryworker
-    container_name: {{ your_project_name }}_local_celeryworker
+    image: {{ your_project_name }}_local_celery
     depends_on:
       - redis
       - postgres
