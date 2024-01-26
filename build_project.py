@@ -1,5 +1,6 @@
 import os
 import re
+import shutil
 import subprocess
 
 
@@ -80,6 +81,23 @@ def change_git_branch(branch_name):
         print(f"Error changing to branch {branch_name}: {e}")
 
 
+def remove_git_connection():
+    git_dir = os.path.join(root_dir, '.git')
+    if os.path.exists(git_dir):
+        shutil.rmtree(git_dir)
+        print("Removed existing Git connection.")
+    else:
+        print("No existing Git connection found.")
+
+
+def initialize_new_git():
+    try:
+        subprocess.run(["git", "init"], check=True, cwd=root_dir)
+        print("Initialized a new Git repository.")
+    except subprocess.CalledProcessError as e:
+        print(f"Error initializing new Git repository: {e}")
+
+
 if __name__ == "__main__":
     root_dir = os.path.dirname(os.path.realpath(__file__))
     old_project_name = '{{ your_project_name }}'
@@ -98,6 +116,9 @@ if __name__ == "__main__":
         change_git_branch("without_redis")
     elif branch_decision == "ny":
         change_git_branch("without_celery")
+
+    remove_git_connection()
+    initialize_new_git()
 
     # main(root_dir, old_project_name, new_project_name)
     # main(root_dir, old_app_name, new_app_name)
