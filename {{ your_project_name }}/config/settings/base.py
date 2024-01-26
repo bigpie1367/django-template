@@ -192,4 +192,7 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
     'ROTATE_REFRESH_TOKENS': True,      # Access Token 재발급 시 Refresh Token 재발급
     'BLACKLIST_AFTER_ROTATION': True,   # Refresh Token 재발급 시 이전 토큰 폐기
+
+    # 이외 추가 옵션은 아래 공식문서 확인
+    # https://django-rest-framework-simplejwt.readthedocs.io/en/latest/
 }

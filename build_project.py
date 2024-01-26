@@ -120,5 +120,7 @@ if __name__ == "__main__":
     remove_git_connection()
     initialize_new_git()
 
+    subprocess.run("git", "remote", )
+
     # main(root_dir, old_project_name, new_project_name)
     # main(root_dir, old_app_name, new_app_name)
