@@ -1,7 +1,9 @@
 import os
 import re
+import subprocess
 
 
+# 파일 내부에 일치하는 단어를 탐색하여 대체
 def replace_word_in_file(file_path, old_project_name, new_project_name, script_path):
     if file_path == script_path:
         # print(f"Skipping the script file itself: {file_path}")
@@ -11,7 +13,6 @@ def replace_word_in_file(file_path, old_project_name, new_project_name, script_p
         with open(file_path, 'r', encoding='utf-8') as file:
             file_contents = file.read()
 
-        # Create a pattern that matches the exact old_project_name
         pattern = re.escape(old_project_name)
         file_contents = re.sub(pattern, new_project_name, file_contents)
 
@@ -23,6 +24,7 @@ def replace_word_in_file(file_path, old_project_name, new_project_name, script_p
         return
 
 
+# 디렉토리명을 순회하여 대체
 def replace_word_in_dirname(dir_path, old_project_name, new_project_name):
     parent_dir = os.path.dirname(dir_path)
     dir_name = os.path.basename(dir_path)
@@ -51,14 +53,51 @@ def main(root_dir, old_project_name, new_project_name):
             replace_word_in_dirname(full_dir_path, old_project_name, new_project_name)
 
 
-if __name__ == "__main__":
-    root_dir = os.path.dirname(os.path.realpath(__file__))  # Root directory is script's location
-    old_project_name = '{{ your_project_name }}'  # Word to be replaced
-    new_project_name = input("Enter the new project name: ")
+def get_valid_input(prompt):
+    while True:
+        user_input = input(prompt)
 
-    main(root_dir, old_project_name, new_project_name)
+        if re.match("^[a-z0-9_]+$", user_input) is not None:
+            return user_input
+        else:
+            print("Invalid input. Please use only lowercase letters, numbers, and underscores.")
+
+
+def get_yes_no_input(prompt):
+    while True:
+        user_input = input(prompt).lower()
+        if user_input in ['y', 'n']:
+            return user_input
+        else:
+            print("Please enter 'y' for yes or 'n' for no.")
+
+
+def change_git_branch(branch_name):
+    try:
+        subprocess.run(["git", "pull", "origin", branch_name], check=True)
+        print(f"Switched to branch: {branch_name}")
+    except subprocess.CalledProcessError as e:
+        print(f"Error changing to branch {branch_name}: {e}")
+
+
+if __name__ == "__main__":
+    root_dir = os.path.dirname(os.path.realpath(__file__))
+    old_project_name = '{{ your_project_name }}'
+    new_project_name = get_valid_input("Enter the new project name: ")
 
     old_app_name = '{{ your_app_name }}'
-    new_app_name = input("Enter the new app name: ")
+    new_app_name = get_valid_input("Enter the new app name: ")
 
-    main(root_dir, old_app_name, new_app_name)
+    use_celery = get_yes_no_input("Use Celery (y/n): ")
+    use_redis = get_yes_no_input("Use Redis (y/n): ")
+
+    branch_decision = use_celery + use_redis
+    if branch_decision == "nn":
+        change_git_branch("without_celery_and_redis")
+    elif branch_decision == "yn":
+        change_git_branch("without_redis")
+    elif branch_decision == "ny":
+        change_git_branch("without_celery")
+
+    # main(root_dir, old_project_name, new_project_name)
+    # main(root_dir, old_app_name, new_app_name)

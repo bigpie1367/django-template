@@ -34,6 +34,6 @@ RUN chmod +x /start-celeryworker
 
 
 # copy application code to WORKDIR
-ADD ./{{ your_project_name }} /app
+ADD ./{{ your_project_name }} /app/
 
 ENTRYPOINT ["/entrypoint"]

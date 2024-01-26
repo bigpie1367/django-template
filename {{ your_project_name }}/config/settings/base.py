@@ -2,6 +2,7 @@
 Base settings to build other settings files upon.
 """
 from pathlib import Path
+from datetime import timedelta
 
 import environ
 
@@ -45,11 +46,13 @@ DJANGO_APPS = [
     "django.contrib.sites",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # "django.contrib.humanize", # Handy template tags
     "django.contrib.admin",
     "django.forms",
 ]
 THIRD_PARTY_APPS = [
+    "rest_framework",
+    "rest_framework_simplejwt"
+    "rest_framework_simplejwt.token_blacklist"
 ]
 
 LOCAL_APPS = [
@@ -171,3 +174,22 @@ CELERY_RESULT_SERIALIZER = "json"
 
 CELERY_TASK_TIME_LIMIT = 5 * 60
 CELERY_TASK_SOFT_TIME_LIMIT = 60
+
+# django-rest-framework
+# -------------------------------------------------------------------------------
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    )
+}
+
+# django-rest-framework-simpleJWT
+# -------------------------------------------------------------------------------
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+    'ROTATE_REFRESH_TOKENS': True,      # Access Token 재발급 시 Refresh Token 재발급
+    'BLACKLIST_AFTER_ROTATION': True,   # Refresh Token 재발급 시 이전 토큰 폐기
+}
