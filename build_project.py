@@ -75,7 +75,7 @@ def get_yes_no_input(prompt):
 
 def change_git_branch(branch_name):
     try:
-        subprocess.run(["git", "pull", "origin", branch_name], check=True)
+        subprocess.run(["git", "switch", "-c", branch_name, f"origin/{branch_name}"], check=True)
         print(f"Switched to branch: {branch_name}")
     except subprocess.CalledProcessError as e:
         print(f"Error changing to branch {branch_name}: {e}")
@@ -106,19 +106,19 @@ if __name__ == "__main__":
     old_app_name = '{{ your_app_name }}'
     new_app_name = get_valid_input("Enter the new app name: ")
 
-    # use_celery = get_yes_no_input("Use Celery (y/n): ")
-    # use_redis = get_yes_no_input("Use Redis (y/n): ")
+    use_celery = get_yes_no_input("Use Celery (y/n): ")
+    use_redis = get_yes_no_input("Use Redis (y/n): ")
 
-    # branch_decision = use_celery + use_redis
-    # if branch_decision == "nn":
-    #     change_git_branch("without_celery_and_redis")
-    # elif branch_decision == "yn":
-    #     change_git_branch("without_redis")
-    # elif branch_decision == "ny":
-    #     change_git_branch("without_celery")
+    branch_decision = use_celery + use_redis
+    if branch_decision == "nn":
+        change_git_branch("without_celery_and_redis")
+    elif branch_decision == "yn":
+        change_git_branch("without_redis")
+    elif branch_decision == "ny":
+        change_git_branch("without_celery")
 
-    # remove_git_connection()
-    # initialize_new_git()
+    remove_git_connection()
+    initialize_new_git()
 
     # subprocess.run("git", "remote", )
 
