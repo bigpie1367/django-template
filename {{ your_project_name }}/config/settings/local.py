@@ -7,7 +7,7 @@ DEBUG = True
 
 SECRET_KEY = "zfDWHBKWfpTNYgpFPssdoS3eav3b5uqkkudcoW099XGGNZrA9s1MMCUXkY9xyhPj"
 
-ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1"]
+ALLOWED_HOSTS = ["*"]
 
 # CACHES
 # ------------------------------------------------------------------------------

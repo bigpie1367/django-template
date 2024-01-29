@@ -23,11 +23,16 @@ USE_TZ = True
 # DATABASES
 # ------------------------------------------------------------------------------
 DATABASES = {
-    "default": env.db(
-        "DATABASE_URL",
-        default="postgres:///{{ your_project_name }}",
-    ),
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': env('POSTGRES_DB', default='{{ your_project_name }}'),
+        'USER': env('POSTGRES_USER', default='your_database_user'),
+        'PASSWORD': env('POSTGRES_PASSWORD', default='your_database_password'),
+        'HOST': env('POSTGRES_HOST', default='localhost'),
+        'PORT': env('POSTGRES_PORT', default='5432'),
+    }
 }
+
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
@@ -40,23 +45,23 @@ WSGI_APPLICATION = "config.wsgi.application"
 # APPS
 # ------------------------------------------------------------------------------
 DJANGO_APPS = [
+    "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
-    "django.contrib.sites",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "django.contrib.admin",
     "django.forms",
 ]
+
 THIRD_PARTY_APPS = [
     "rest_framework",
-    "rest_framework_simplejwt"
+    "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist"
 ]
 
 LOCAL_APPS = [
-    "{{ your_app_name }}"
+    "{{ your_project_name }}_site",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -67,11 +72,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 # AUTHENTICATION
 # ------------------------------------------------------------------------------
-AUTH_USER_MODEL = "{{ your_app_name }}.User"
-
-LOGIN_REDIRECT_URL = "users:redirect"
-
-LOGIN_URL = "account_login"
+AUTH_USER_MODEL = "{{ your_project_name }}_site.User"
 
 # PASSWORDS
 # ------------------------------------------------------------------------------
@@ -158,22 +159,22 @@ ADMIN_URL = "admin/"
 
 # Celery
 # ------------------------------------------------------------------------------
-if USE_TZ:
-    CELERY_TIMEZONE = TIME_ZONE
+# if USE_TZ:
+#     CELERY_TIMEZONE = TIME_ZONE
 
-CELERY_BROKER_URL = env("CELERY_BROKER_URL")
+# CELERY_BROKER_URL = env("CELERY_BROKER_URL")
 
-CELERY_RESULT_BACKEND = CELERY_BROKER_URL
-CELERY_RESULT_EXTENDED = True
-CELERY_RESULT_BACKEND_ALWAYS_RETRY = True
-CELERY_RESULT_BACKEND_MAX_RETRIES = 10
+# CELERY_RESULT_BACKEND = CELERY_BROKER_URL
+# CELERY_RESULT_EXTENDED = True
+# CELERY_RESULT_BACKEND_ALWAYS_RETRY = True
+# CELERY_RESULT_BACKEND_MAX_RETRIES = 10
 
-CELERY_ACCEPT_CONTENT = ["json"]
-CELERY_TASK_SERIALIZER = "json"
-CELERY_RESULT_SERIALIZER = "json"
+# CELERY_ACCEPT_CONTENT = ["json"]
+# CELERY_TASK_SERIALIZER = "json"
+# CELERY_RESULT_SERIALIZER = "json"
 
-CELERY_TASK_TIME_LIMIT = 5 * 60
-CELERY_TASK_SOFT_TIME_LIMIT = 60
+# CELERY_TASK_TIME_LIMIT = 5 * 60
+# CELERY_TASK_SOFT_TIME_LIMIT = 60
 
 # django-rest-framework
 # -------------------------------------------------------------------------------

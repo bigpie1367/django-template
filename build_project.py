@@ -100,27 +100,27 @@ def initialize_new_git():
 
 if __name__ == "__main__":
     root_dir = os.path.dirname(os.path.realpath(__file__))
-    old_project_name = '{{ your_project_name }}'
+    old_project_name = 'inpleroutine'
     new_project_name = get_valid_input("Enter the new project name: ")
 
-    old_app_name = '{{ your_app_name }}'
+    old_app_name = 'inpleroutine_site'
     new_app_name = get_valid_input("Enter the new app name: ")
 
-    use_celery = get_yes_no_input("Use Celery (y/n): ")
-    use_redis = get_yes_no_input("Use Redis (y/n): ")
+    # use_celery = get_yes_no_input("Use Celery (y/n): ")
+    # use_redis = get_yes_no_input("Use Redis (y/n): ")
 
-    branch_decision = use_celery + use_redis
-    if branch_decision == "nn":
-        change_git_branch("without_celery_and_redis")
-    elif branch_decision == "yn":
-        change_git_branch("without_redis")
-    elif branch_decision == "ny":
-        change_git_branch("without_celery")
+    # branch_decision = use_celery + use_redis
+    # if branch_decision == "nn":
+    #     change_git_branch("without_celery_and_redis")
+    # elif branch_decision == "yn":
+    #     change_git_branch("without_redis")
+    # elif branch_decision == "ny":
+    #     change_git_branch("without_celery")
 
-    remove_git_connection()
-    initialize_new_git()
+    # remove_git_connection()
+    # initialize_new_git()
 
-    subprocess.run("git", "remote", )
+    # subprocess.run("git", "remote", )
 
-    # main(root_dir, old_project_name, new_project_name)
-    # main(root_dir, old_app_name, new_app_name)
+    main(root_dir, old_project_name, new_project_name)
+    main(root_dir, old_app_name, new_app_name)

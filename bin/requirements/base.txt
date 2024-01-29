@@ -2,6 +2,7 @@ Pillow==10.2.0  # https://github.com/python-pillow/Pillow
 redis==5.0.1  # https://github.com/redis/redis-py
 celery==5.3.6  # pyup: < 6.0  # https://github.com/celery/celery
 psycopg==3.1.17  # https://github.com/psycopg/psycopg
+argon2-cffi==23.1.0  # https://github.com/hynek/argon2_cffi
 gunicorn
 
 # Django
