@@ -90,12 +90,33 @@ def remove_git_connection():
         print("No existing Git connection found.")
 
 
-def initialize_new_git():
+def initialize_new_git(git_url):
+    # 입력한 Git URL이 적합한지 확인
+    try:
+        subprocess.run(["git", "ls-remote", git_url], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    except subprocess.CalledProcessError:
+        print("Invalid or inaccessible Git URL.")
+        return False
+
+    remove_git_connection()
+
+    # 입력한 Git URL이 정상적일 경우 기존 Git 초기화 및 remote 연결
     try:
         subprocess.run(["git", "init"], check=True, cwd=root_dir)
         print("Initialized a new Git repository.")
     except subprocess.CalledProcessError as e:
         print(f"Error initializing new Git repository: {e}")
+        return False
+
+    try:
+        subprocess.run(["git", "remote", "add", "origin", git_url], check=True, cwd=root_dir)
+        print(f"Added Git remote: {git_url}")
+    except subprocess.CalledProcessError as e:
+        print(f"Error adding Git remote: {e}")
+        return False
+
+    print("Git repository initialized and remote added successfully.")
+    return True
 
 
 if __name__ == "__main__":
@@ -117,10 +138,8 @@ if __name__ == "__main__":
     elif branch_decision == "ny":
         change_git_branch("without_celery")
 
-    remove_git_connection()
-    initialize_new_git()
-
-    # subprocess.run("git", "remote", )
+    git_url = input("Enter the Git remote URL: ")
+    initialize_new_git(git_url)
 
     main(root_dir, old_app_name, new_app_name)
     main(root_dir, old_project_name, new_project_name)
