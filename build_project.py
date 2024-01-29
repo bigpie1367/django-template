@@ -100,10 +100,10 @@ def initialize_new_git():
 
 if __name__ == "__main__":
     root_dir = os.path.dirname(os.path.realpath(__file__))
-    old_project_name = 'inpleroutine'
+    old_project_name = '{{ your_project_name }}'
     new_project_name = get_valid_input("Enter the new project name: ")
 
-    old_app_name = 'inpleroutine_site'
+    old_app_name = '{{ your_app_name }}'
     new_app_name = get_valid_input("Enter the new app name: ")
 
     # use_celery = get_yes_no_input("Use Celery (y/n): ")

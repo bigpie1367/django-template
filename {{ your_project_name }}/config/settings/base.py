@@ -61,7 +61,7 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
-    "{{ your_project_name }}_site",
+    "{{ your_app_name }}",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -72,7 +72,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 # AUTHENTICATION
 # ------------------------------------------------------------------------------
-AUTH_USER_MODEL = "{{ your_project_name }}_site.User"
+AUTH_USER_MODEL = "{{ your_app_name }}.User"
 
 # PASSWORDS
 # ------------------------------------------------------------------------------
