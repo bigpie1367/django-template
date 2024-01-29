@@ -122,5 +122,5 @@ if __name__ == "__main__":
 
     # subprocess.run("git", "remote", )
 
-    main(root_dir, old_project_name, new_project_name)
     main(root_dir, old_app_name, new_app_name)
+    main(root_dir, old_project_name, new_project_name)

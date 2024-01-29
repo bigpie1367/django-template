@@ -1,0 +1,19 @@
+[
+{
+    "model": "{{ your_app_name }}.user",
+    "pk": 1,
+    "fields": {
+        "password": "argon2$argon2id$v=19$m=102400,t=2,p=8$TlRqY3NoamFxTU80VjZJdVZBYlRtaw$v63XumRLCxAL2A+OoC6FZMrJxlBjsrRWiKrP2NPY9fM",
+        "last_login": "2024-01-29T02:20:37.684Z",
+        "is_superuser": true,
+        "username": "admin",
+        "email": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2024-01-29T00:05:36Z",
+        "name": "",
+        "groups": [],
+        "user_permissions": []
+    }
+}
+]
