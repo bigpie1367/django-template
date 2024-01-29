@@ -43,12 +43,12 @@ def main(root_dir, old_project_name, new_project_name):
     script_path = os.path.abspath(__file__)
 
     for dirpath, dirnames, filenames in os.walk(root_dir, topdown=False):
-        # Replace in files
+        # 파일 내 일치하는 코드 대체
         for filename in filenames:
             file_path = os.path.join(dirpath, filename)
             replace_word_in_file(file_path, old_project_name, new_project_name, script_path)
 
-        # Replace in directory names
+        # 디렉토리 명 내 일치하는 코드 대체
         for dirname in dirnames:
             full_dir_path = os.path.join(dirpath, dirname)
             replace_word_in_dirname(full_dir_path, old_project_name, new_project_name)
@@ -94,8 +94,8 @@ def initialize_new_git(git_url):
     # 입력한 Git URL이 적합한지 확인
     try:
         subprocess.run(["git", "ls-remote", git_url], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    except subprocess.CalledProcessError:
-        print("Invalid or inaccessible Git URL.")
+    except subprocess.CalledProcessError as e:
+        print(f"Invalid or inaccessible Git URL: {e}")
         return False
 
     remove_git_connection()
@@ -120,6 +120,11 @@ def initialize_new_git(git_url):
 
 
 if __name__ == "__main__":
+    """
+    1. 사용자로부터 project, app name을 입력받아 기존 값 대체
+    2. Celery, Redis 사용 유무에 따라 사전에 설정된 코드들이 존재하는 git branch로 switch
+    3. 사용자로부터 Git URL을 입력받아 접근 가능한지 확인 후 Git 초기화 및 연결
+    """
     root_dir = os.path.dirname(os.path.realpath(__file__))
     old_project_name = '{{ your_project_name }}'
     new_project_name = get_valid_input("Enter the new project name: ")
