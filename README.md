@@ -63,9 +63,43 @@ $ python build_project.py
 
 Enter the new project name:
 Enter the new app name:
-Use Celery:
-Use Redis:
+Use Celery (y/n):
+Use Redis (y/n):
 Enter the Git remote URL:
+```
+
+이후 본인의 프로젝트 환경에 맞게 추가적으로 수정을 진행할 필요가 있다.
+
+```python
+# {{ your_project_name }}/settings/base.py line 25
+# 테스트를 진행할 로컬 DB 환경에 맞게 수정
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': env('POSTGRES_DB', default='{{ your_project_name }}'),
+        'USER': env('POSTGRES_USER', default='your_database_user'),
+        'PASSWORD': env('POSTGRES_PASSWORD', default='your_database_password'),
+        'HOST': env('POSTGRES_HOST', default='localhost'),
+        'PORT': env('POSTGRES_PORT', default='5432'),
+    }
+}
+```
+
+```python
+# {{ your_project_name }}/settings/base.py line 25
+# 테스트를 진행할 로컬 DB 환경에 맞게 수정
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': env('POSTGRES_DB', default='{{ your_project_name }}'),
+        'USER': env('POSTGRES_USER', default='your_database_user'),
+        'PASSWORD': env('POSTGRES_PASSWORD', default='your_database_password'),
+        'HOST': env('POSTGRES_HOST', default='localhost'),
+        'PORT': env('POSTGRES_PORT', default='5432'),
+    }
+}
 ```
 
 ## Run Django Project
