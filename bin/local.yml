@@ -7,14 +7,14 @@ volumes:
 services:
   django: &django
     build:
-      context: .
-      dockerfile: ./compose/local/django/Dockerfile
+      context: ..
+      dockerfile: ./bin/compose/local/django/Dockerfile
     image: {{ your_project_name }}_local_django
     depends_on:
       - postgres
       - redis
     volumes:
-      - ./../{{ your_project_name }}:/app:z
+      - ./{{ your_project_name }}:/app:z
     env_file:
       - ./.envs/.local/.django
       - ./.envs/.local/.postgres
@@ -24,14 +24,14 @@ services:
 
   postgres:
     build:
-      context: .
-      dockerfile: ./compose/production/postgres/Dockerfile
+      context: ..
+      dockerfile: ./bin/compose/production/postgres/Dockerfile
     image: {{ your_project_name }}_production_postgres
     volumes:
       - {{ your_project_name }}_local_postgres_data:/var/lib/postgresql/data
       - {{ your_project_name }}_local_postgres_data_backups:/backups
     env_file:
-      - ./.envs/.local/.postgres
+      - ./bin/.envs/.local/.postgres
 
   redis:
     image: redis:6

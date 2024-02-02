@@ -8,7 +8,7 @@ volumes:
 services:
   django: &django
     build:
-      context: ../
+      context: ..
       dockerfile: ./bin/compose/production/django/Dockerfile
     image: {{ your_project_name }}_production_django
     volumes:
@@ -17,25 +17,25 @@ services:
       - postgres
       - redis
     env_file:
-      - ./.envs/.production/.django
-      - ./.envs/.production/.postgres
+      - ./bin/.envs/.production/.django
+      - ./bin/.envs/.production/.postgres
     command: /start
 
   postgres:
     build:
-      context: .
-      dockerfile: ./compose/production/postgres/Dockerfile
+      context: ..
+      dockerfile: ./bin/compose/production/postgres/Dockerfile
     image: {{ your_project_name }}_production_postgres
     volumes:
       - production_postgres_data:/var/lib/postgresql/data
       - production_postgres_data_backups:/backups
     env_file:
-      - ./.envs/.production/.postgres
+      - ./bin/.envs/.production/.postgres
 
   nginx:
     build:
-      context: .
-      dockerfile: ./compose/production/nginx/Dockerfile
+      context: ..
+      dockerfile: ./bin/compose/production/nginx/Dockerfile
     image: {{ your_project_name }}_local_nginx
     ports:
       - "8402:80"

@@ -1,8 +1,8 @@
-FROM python:3.10.6                                                                                   
+FROM python:3.10.6
 ENV PYTHONUNBUFFERED 1
 
 WORKDIR /app
-ADD    ./requirements .
+ADD    ./bin/requirements .
 RUN    apt-get update -y
 RUN    pip install --upgrade pip
 RUN    pip install -r local.txt
@@ -20,18 +20,18 @@ RUN    . ~/.bashrc
 RUN    bash -l -c "nvm install 14.15.0"
 
 # copy application code to WORKDIR
-COPY ./../ /app/
+COPY . /app/
 WORKDIR /app/
 
-COPY ./compose/production/django/entrypoint /entrypoint
+COPY ./bin/compose/production/django/entrypoint /entrypoint
 RUN sed -i 's/\r$//g' /entrypoint
 RUN chmod +x /entrypoint
 
-COPY ./compose/local/django/start /start
+COPY ./bin/compose/local/django/start /start
 RUN sed -i 's/\r$//g' /start
 RUN chmod +x /start
 
-COPY ./compose/local/django/celery/start /start-celeryworker
+COPY ./bin/compose/local/django/celery/start /start-celeryworker
 RUN sed -i 's/\r$//g' /start-celeryworker
 RUN chmod +x /start-celeryworker
 
