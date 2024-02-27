@@ -1,9 +1,13 @@
 version: "3"
 
+networks:
+  {{ your_project_name }}_network:
+
 volumes:
   production_postgres_data: {}
   production_postgres_data_backups: {}
   production_django_media: {}
+  production_django_static: {}
 
 services:
   django: &django
@@ -12,37 +16,45 @@ services:
       dockerfile: ./bin/compose/production/django/Dockerfile
     image: {{ your_project_name }}_production_django
     volumes:
+      - ../{{ your_project_name }}/:/app/
       - production_django_media:/app/{{ your_project_name }}/media
+      - production_django_static:/app/staticfiles
     depends_on:
       - postgres
-      - redis
     env_file:
-      - ./bin/.envs/.production/.django
-      - ./bin/.envs/.production/.postgres
+      - ./.envs/.production/.django
+      - ./.envs/.production/.postgres
     command: /start
+    networks:
+      - {{ your_project_name }}_network
 
   postgres:
     build:
-      context: ..
-      dockerfile: ./bin/compose/production/postgres/Dockerfile
+      context: .
+      dockerfile: ./compose/production/postgres/Dockerfile
     image: {{ your_project_name }}_production_postgres
     volumes:
       - production_postgres_data:/var/lib/postgresql/data
       - production_postgres_data_backups:/backups
     env_file:
-      - ./bin/.envs/.production/.postgres
+      - ./.envs/.production/.postgres
+    networks:
+      - {{ your_project_name }}_network
 
   nginx:
     build:
       context: ..
       dockerfile: ./bin/compose/production/nginx/Dockerfile
-    image: {{ your_project_name }}_local_nginx
-    ports:
-      - "8402:80"
-    depends_on:
-      - django
+    image: {{ your_project_name }}_production_nginx
     volumes:
       - production_django_media:/usr/share/nginx/media:ro
+      - production_django_static:/app/staticfiles
+    ports:
+      - "8412:80"
+    depends_on:
+      - django
+    networks:
+      - {{ your_project_name }}_network
 
   redis:
     image: redis:6

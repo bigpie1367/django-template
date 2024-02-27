@@ -62,6 +62,7 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     "{{ your_app_name }}",
+    "sso_client"
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -180,20 +181,28 @@ CELERY_TASK_SOFT_TIME_LIMIT = 60
 # -------------------------------------------------------------------------------
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        # "rest_framework.authentication.SessionAuthentication",
-        # "rest_framework.authentication.TokenAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
         "rest_framework_simplejwt.authentication.JWTAuthentication",
-    )
+    ),
+    "EXCEPTION_HANDLER": "{{ your_app_name }}.exception.custom_exception_handler"
 }
 
 # django-rest-framework-simpleJWT
 # -------------------------------------------------------------------------------
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
-    'ROTATE_REFRESH_TOKENS': True,      # Access Token 재발급 시 Refresh Token 재발급
-    'BLACKLIST_AFTER_ROTATION': True,   # Refresh Token 재발급 시 이전 토큰 폐기
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+    "ROTATE_REFRESH_TOKENS": True,      # Access Token 재발급 시 Refresh Token 재발급
+    "BLACKLIST_AFTER_ROTATION": True,   # Refresh Token 재발급 시 이전 토큰 폐기
+
+    "SIGNING_KEY": env(
+        'JWT_SECRET_KEY',
+        default='db769c0f35895eecf811288c9fbc3801899b558340632d68081e561390244428af40dc75ca2aa626eb49b5dab8e329a6337dd1c12f75fc480137394e67cd9536'
+    ),
 
     # 이외 추가 옵션은 아래 공식문서 확인
     # https://django-rest-framework-simplejwt.readthedocs.io/en/latest/
 }
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

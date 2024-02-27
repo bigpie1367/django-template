@@ -1,3 +1,8 @@
+"""
+SSO User, Department, Grade를 위한 모델 파일
+SSO 서버를 사용할 경우 실제 사용할 프로젝트의 models.py에 추가
+"""
+
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 

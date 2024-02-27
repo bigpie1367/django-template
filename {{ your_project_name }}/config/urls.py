@@ -13,7 +13,8 @@ urlpatterns = [
 
 # API URLS
 urlpatterns += [
-    path("api/", include("{{ your_app_name }}.urls"))
+    path("api/", include("{{ your_app_name }}.urls")),
+    path("sso/", include("sso_client.urls"))
 ]
 
 # DEBUG 환경에서 에러 페이지 테스트를 위함

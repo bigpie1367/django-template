@@ -19,19 +19,21 @@ services:
       - ./.envs/.local/.django
       - ./.envs/.local/.postgres
     ports:
-      - "20000:8000"
+      - "20002:8000"
     command: /start
 
   postgres:
     build:
-      context: ..
-      dockerfile: ./bin/compose/production/postgres/Dockerfile
-    image: {{ your_project_name }}_production_postgres
+      context: .
+      dockerfile: ./compose/production/postgres/Dockerfile
+    image: {{ your_project_name }}_local_postgres
     volumes:
       - {{ your_project_name }}_local_postgres_data:/var/lib/postgresql/data
       - {{ your_project_name }}_local_postgres_data_backups:/backups
     env_file:
-      - ./bin/.envs/.local/.postgres
+      - ./.envs/.local/.postgres
+    ports:
+      - "20003:5432"
 
   redis:
     image: redis:6

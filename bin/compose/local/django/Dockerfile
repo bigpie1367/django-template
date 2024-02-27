@@ -2,26 +2,10 @@ FROM python:3.10.6
 ENV PYTHONUNBUFFERED 1
 
 WORKDIR /app
-ADD    ./bin/requirements .
-RUN    apt-get update -y
+ADD    ./bin/requirements ./requirements
+RUN    apt-get update -y && apt-get install -y vim
 RUN    pip install --upgrade pip
-RUN    pip install -r local.txt
-
-# Install NVM
-RUN    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
-
-# Activate NVM
-RUN    export NVM_DIR="$HOME/.nvm" && \
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" && \
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-RUN    . ~/.bashrc
-
-# Install Node.js 14.15.0
-RUN    bash -l -c "nvm install 14.15.0"
-
-# copy application code to WORKDIR
-COPY . /app/
-WORKDIR /app/
+RUN    pip install -r ./requirements/local.txt
 
 COPY ./bin/compose/production/django/entrypoint /entrypoint
 RUN sed -i 's/\r$//g' /entrypoint
