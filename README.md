@@ -55,16 +55,13 @@ $ git clone https://github.com/bigpie1367/inco-django-template.git
 이후 본인 프로젝트에 맞게 설정하기 위해 동봉된 파이썬 코드를 실행하여 프로젝트를 설정한다. 해당 코드는 아래와 같은 순서로 수행된다
 
 1. 사용자로부터 project, app name을 입력받아 기존 값 대체
-2. Celery, Redis 사용 유무에 따라 사전에 설정된 코드들이 존재하는 git branch로 switch
-3. 사용자로부터 Git URL을 입력받아 정상적인 URL인지 확인 후 Git 초기화 및 연결
+2. 사용자로부터 Git URL을 입력받아 정상적인 URL인지 확인 후 Git 초기화 및 연결
 
 ```python
 $ python build_project.py
 
 Enter the new project name:
 Enter the new app name:
-Use Celery (y/n):
-Use Redis (y/n):
 Enter the Git remote URL:
 ```
 
@@ -89,18 +86,6 @@ DATABASES = {
 ```python
 # {{ your_project_name }}/settings/base.py line 25
 # 테스트를 진행할 로컬 DB 환경에 맞게 수정
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('POSTGRES_DB', default='{{ your_project_name }}'),
-        'USER': env('POSTGRES_USER', default='your_database_user'),
-        'PASSWORD': env('POSTGRES_PASSWORD', default='your_database_password'),
-        'HOST': env('POSTGRES_HOST', default='localhost'),
-        'PORT': env('POSTGRES_PORT', default='5432'),
-    }
-}
-```
 
 ## Run Django Project
 

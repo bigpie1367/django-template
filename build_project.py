@@ -73,14 +73,6 @@ def get_yes_no_input(prompt):
             print("Please enter 'y' for yes or 'n' for no.")
 
 
-def change_git_branch(branch_name):
-    try:
-        subprocess.run(["git", "switch", "-c", branch_name, f"origin/{branch_name}"], check=True)
-        print(f"Switched to branch: {branch_name}")
-    except subprocess.CalledProcessError as e:
-        print(f"Error changing to branch {branch_name}: {e}")
-
-
 def remove_git_connection():
     git_dir = os.path.join(root_dir, '.git')
     if os.path.exists(git_dir):
@@ -122,8 +114,7 @@ def initialize_new_git(git_url):
 if __name__ == "__main__":
     """
     1. 사용자로부터 project, app name을 입력받아 기존 값 대체
-    2. Celery, Redis 사용 유무에 따라 사전에 설정된 코드들이 존재하는 git branch로 switch
-    3. 사용자로부터 Git URL을 입력받아 접근 가능한지 확인 후 Git 초기화 및 연결
+    2. 사용자로부터 Git URL을 입력받아 접근 가능한지 확인 후 Git 초기화 및 연결
     """
     root_dir = os.path.dirname(os.path.realpath(__file__))
     old_project_name = '{{ your_project_name }}'
@@ -131,17 +122,6 @@ if __name__ == "__main__":
 
     old_app_name = '{{ your_app_name }}'
     new_app_name = get_valid_input("Enter the new app name: ")
-
-    use_celery = get_yes_no_input("Use Celery (y/n): ")
-    use_redis = get_yes_no_input("Use Redis (y/n): ")
-
-    branch_decision = use_celery + use_redis
-    if branch_decision == "nn":
-        change_git_branch("without_celery_and_redis")
-    elif branch_decision == "yn":
-        change_git_branch("without_redis")
-    elif branch_decision == "ny":
-        change_git_branch("without_celery")
 
     git_url = input("Enter the Git remote URL: ")
     initialize_new_git(git_url)

@@ -12,7 +12,6 @@ services:
     image: {{ your_project_name }}_local_django
     depends_on:
       - postgres
-      - redis
     volumes:
       - ./{{ your_project_name }}:/app:z
     env_file:
@@ -34,15 +33,3 @@ services:
       - ./.envs/.local/.postgres
     ports:
       - "20003:5432"
-
-  redis:
-    image: redis:6
-
-  celery:
-    <<: *django
-    image: {{ your_project_name }}_local_celery
-    depends_on:
-      - redis
-      - postgres
-    ports: []
-    command: /start-celeryworker

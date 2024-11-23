@@ -55,11 +55,3 @@ services:
       - django
     networks:
       - {{ your_project_name }}_network
-
-  redis:
-    image: redis:6
-
-  celery:
-    <<: *django
-    image: {{ your_project_name }}_production_celery
-    command: /start-celeryworker

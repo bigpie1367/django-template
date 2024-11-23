@@ -61,8 +61,7 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
-    "{{ your_app_name }}",
-    "sso_client"
+    "{{ your_app_name }}"
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -157,25 +156,6 @@ X_FRAME_OPTIONS = "DENY"
 # ADMIN
 # ------------------------------------------------------------------------------
 ADMIN_URL = "admin/"
-
-# Celery
-# ------------------------------------------------------------------------------
-if USE_TZ:
-    CELERY_TIMEZONE = TIME_ZONE
-
-CELERY_BROKER_URL = env("CELERY_BROKER_URL")
-
-CELERY_RESULT_BACKEND = CELERY_BROKER_URL
-CELERY_RESULT_EXTENDED = True
-CELERY_RESULT_BACKEND_ALWAYS_RETRY = True
-CELERY_RESULT_BACKEND_MAX_RETRIES = 10
-
-CELERY_ACCEPT_CONTENT = ["json"]
-CELERY_TASK_SERIALIZER = "json"
-CELERY_RESULT_SERIALIZER = "json"
-
-CELERY_TASK_TIME_LIMIT = 5 * 60
-CELERY_TASK_SOFT_TIME_LIMIT = 60
 
 # django-rest-framework
 # -------------------------------------------------------------------------------
