@@ -8,7 +8,7 @@ Django 프로젝트를 서비스하기 위한 디렉토리이다.
 
 - **config**
 
-  Django 서버를 호스팅하기 위한 설정들이 존재하는 디렉토리로, 각 환경에 맞는 settings 파일(base, local, production.py)들과 asgi, wsgi, urls, celery_app 파일들이 존재한다.
+  Django 서버를 호스팅하기 위한 설정들이 존재하는 디렉토리로, 각 환경에 맞는 settings 파일(base, local, production.py)들과 asgi, wsgi, urls 파일들이 존재한다.
 
   사용할 때 로컬 환경에서 DB 테스트틑 위해 `settings/base.py` 내 `DATABASE` 설정을 해주어야 한다.
 
